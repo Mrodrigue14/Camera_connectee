@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 from mpu_6050 import check_for_sabotage  
 from signal_mqtt import SignalMqtt
 from speaker import ConnectBluetooth
+from custom_camera import CustomCamera
 import os
 
 bluetooth_address = "F4:4E:FD:7A:94:BA"
@@ -11,8 +12,10 @@ bt_connection = ConnectBluetooth(bluetooth_address, volume_level)
 bt_connection.connect_device()
 
 signal_mqtt = SignalMqtt()
+custom_camera = CustomCamera()
 
 mqttc = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2,"idSession",False)
+signal_mqtt.subscribes(custom_camera.on_motion_detected)
 mqttc.on_connect = signal_mqtt.on_connect
 mqttc.on_message = signal_mqtt.on_message
 mqttc.on_subscribe = signal_mqtt.on_subscribe

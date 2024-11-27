@@ -51,50 +51,50 @@ Ce programme intègre un capteur de mouvement, une caméra et un gyroscope avec 
 ## Utilisation
 
     Démarrer le Broker MQTT :
-        Assurez-vous que le broker MQTT fonctionne sur 10.4.1.203 (ou mettez à jour l'IP dans main.py).
+        - Assurez-vous que le broker MQTT fonctionne sur 10.4.1.203 (ou mettez à jour l'IP dans main.py).
 
     Exécuter le Programme :
 
     python main.py
 
     Tester la Détection de Mouvement :
-        Provoquez un mouvement devant la caméra pour détecter et analyser la présence humaine.
-        Des alertes SMS seront envoyées si une présence humaine est détectée.
+        - Provoquez un mouvement devant la caméra pour détecter et analyser la présence humaine.
+        - Des alertes SMS seront envoyées si une présence humaine est détectée.
 
     Tester la Détection de Sabotage :
-        Simulez des mouvements brusques sur le gyroscope. Une alerte SMS sera envoyée en cas de sabotage détecté.
+        - Simulez des mouvements brusques sur le gyroscope. Une alerte SMS sera envoyée en cas de sabotage détecté.
 
 ## Description des Fichiers
 main.py
 
-    Initialise le client MQTT et configure les callbacks pour la détection de mouvement et de sabotage.
+    - Initialise le client MQTT et configure les callbacks pour la détection de mouvement et de sabotage.
 
 signal_mqtt.py
 
-    Contient la classe SignalMqtt avec les méthodes pour gérer les événements MQTT et l'analyse d'images.
+    - Contient la classe SignalMqtt avec les méthodes pour gérer les événements MQTT et l'analyse d'images.
 
 mpu_6050.py
 
-    Surveille les données du gyroscope pour détecter les mouvements brusques indicatifs de sabotage.
+    - Surveille les données du gyroscope pour détecter les mouvements brusques indicatifs de sabotage.
 
 image_analyzer.py
 
-    Utilise Azure Cognitive Services pour analyser les images et détecter la présence humaine.
+    - Utilise Azure Cognitive Services pour analyser les images et détecter la présence humaine.
 
 send_sms.py
 
-    Envoie des notifications SMS grâce à l'API Twilio.
+    - Envoie des notifications SMS grâce à l'API Twilio.
 
-requirement.txt
+requirements.txt
 
-    Liste toutes les dépendances Python.
+    - Liste toutes les dépendances Python.
 
 # Configuration de l'Environnement
 
-    Assurez-vous que le broker MQTT est accessible sur l'IP et le port configurés.
-    Connectez et configurez le matériel (capteur de mouvement, gyroscope) sur l'appareil.
+    - Assurez-vous que le broker MQTT est accessible sur l'IP et le port configurés.
+    - Connectez et configurez le matériel (capteur de mouvement, gyroscope) sur l'appareil.
 
 # Notes
 
-    Remplacez les variables codées en dur (par exemple, IP du broker MQTT, numéro d'envoi Twilio) par les valeurs appropriées.
-    Assurez-vous que les identifiants Azure et Twilio sont sécurisés à l'aide de variables d'environnement ou d'un coffre sécurisé.
+    - Remplacez les variables codées en dur (par exemple, IP du broker MQTT, numéro d'envoi Twilio) par les valeurs appropriées.
+    - Assurez-vous que les identifiantsTwilio sont sécurisés à l'aide de variables d'environnement ou d'un coffre sécurisé.

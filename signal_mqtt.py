@@ -1,9 +1,18 @@
 from image_analyzer import ImageAnalyzer
-from send_sms import sends_sms
 from picamzero import Camera
 from time import sleep
 
 class SignalMqtt:
+
+    def __init__(self):
+        self.callbacks =  []
+    def subscribes(self, callback):
+        self.callbacks.append(callback)
+
+    def notify(self):
+        for fn in self.callbacks:
+            fn()
+
 
     def on_subscribe(self,client, userdata, mid, reason_code_list, properties):
         if reason_code_list[0].is_failure:
@@ -19,11 +28,12 @@ class SignalMqtt:
         client.disconnect()
 
     def on_message(self,client, userdata, msg):
-        ENDPOINT = "https://ressourcevisionus3.cognitiveservices.azure.com/"
-        KEY      = "BdarwcuLHS51halnVv90SvqG5XRQwpaH5LC1SOwqX5yKH8hgUC7FJQQJ99AKACYeBjFXJ3w3AAAFACOGOxti"
+        #ENDPOINT = "https://ressourcevisionus3.cognitiveservices.azure.com/"
+        #KEY      = "BdarwcuLHS51halnVv90SvqG5XRQwpaH5LC1SOwqX5yKH8hgUC7FJQQJ99AKACYeBjFXJ3w3AAAFACOGOxti"
         msg.payload = msg.payload.decode("utf-8")
         if msg.payload == "Motion detected":
-            cam = Camera()
+            self.notify()
+            """cam = Camera()
             cam.take_photo("photo.jpg")
             with open("photo.jpg", "rb") as f:
                 image_data = f.read()
@@ -33,7 +43,7 @@ class SignalMqtt:
                 print("Un humain a été détecté dans l'image.")
                 sends_sms("human")
             else:
-                print("Aucun humain détecté dans l'image.")
+                print("Aucun humain détecté dans l'image.")"""
         print(msg.topic+" "+str(msg.payload))
 
     def on_connect(self,client, userdata, flags, reason_code, properties):
