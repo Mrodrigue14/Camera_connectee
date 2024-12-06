@@ -8,7 +8,7 @@ auth_token = os.environ["TWILIO_AUTH_TOKEN"]
 client = Client(account_sid, auth_token)
 
 def sends_sms(action):
-    numbers_to_message = ['+14182212734', '+14189744004', '+14182095954']
+    numbers_to_message = [## Add the phone numbers you want to message here]
     for number in numbers_to_message:
         if action == "human":
             message = client.messages.create(

@@ -1,5 +1,4 @@
 import paho.mqtt.client as mqtt
-import RPi.GPIO as GPIO
 
 def on_subscribe(client, userdata, mid, reason_code_list, properties):
     # Since we subscribed only for a single channel, reason_code_list contains
@@ -21,10 +20,7 @@ def on_unsubscribe(client, userdata, mid, reason_code_list, properties):
 def on_message(client, userdata, msg):
     msg.payload = msg.payload.decode("utf-8")
     if msg.payload == "Motion detected":
-        GPIO.output(17, GPIO.HIGH)
-    else:
-        GPIO.output(17, GPIO.LOW)
-    print(msg.topic+" "+str(msg.payload))
+        print(msg.topic+" "+str(msg.payload))
 
 def on_connect(client, userdata, flags, reason_code, properties):
     if reason_code.is_failure:
@@ -42,8 +38,5 @@ mqttc.on_unsubscribe = on_unsubscribe
 
 
 mqttc.connect("10.4.1.199",1883,0)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT)
 mqttc.loop_forever()
-GPIO.cleanup()
 print(f"Received the following message: {mqttc.user_data_get()}")
